@@ -1,24 +1,79 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMe } from '../services/auth';  // si tu as déjà ce service
+import axios from 'axios';
+import './Profile.css';
 
 export default function Profile() {
   const [user, setUser] = useState(null);
+  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) return;
-    fetchMe(token)
-      .then(res => setUser(res.data))
+    axios
+      .get('http://localhost:5000/api/auth/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(res => {
+        setUser(res.data);
+        setForm({ name: res.data.name, email: res.data.email, password: '' });
+      })
       .catch(console.error);
-  }, []);
+  }, [token]);
 
-  if (!user) return <p>Chargement du profil…</p>;
+  const handleSubmit = e => {
+    e.preventDefault();
+    axios
+      .patch(
+        'http://localhost:5000/api/auth/me',
+        { name: form.name, email: form.email, ...(form.password && { password: form.password }) },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then(res => {
+        setUser(res.data);
+        alert('Profil mis à jour !');
+        setForm(f => ({ ...f, password: '' }));
+      })
+      .catch(err => {
+        console.error(err);
+        alert(err.response?.data?.message || 'Erreur !');
+      });
+  };
+
+  if (!user) return <p>Chargement…</p>;
 
   return (
     <div className="profile-page">
-      <h1>Profil de {user.name}</h1>
-      <p>Email : {user.email}</p>
-      {/* Ajoute ici les autres infos ou formulaires pour modifier le profil */}
+      <h1>Mon Profil</h1>
+      <form className="profile-form" onSubmit={handleSubmit}>
+        <label>
+          Nom
+          <input
+            type="text"
+            value={form.name}
+            onChange={e => setForm({ ...form, name: e.target.value })}
+            required
+          />
+        </label>
+        <label>
+          Email
+          <input
+            type="email"
+            value={form.email}
+            onChange={e => setForm({ ...form, email: e.target.value })}
+            required
+          />
+        </label>
+        <label>
+          Nouveau mot de passe
+          <input
+            type="password"
+            value={form.password}
+            onChange={e => setForm({ ...form, password: e.target.value })}
+            placeholder="Laisser vide pour ne pas changer"
+          />
+        </label>
+        <button type="submit">Mettre à jour</button>
+      </form>
     </div>
   );
 }
+
