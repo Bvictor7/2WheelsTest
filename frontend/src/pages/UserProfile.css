@@ -1,0 +1,49 @@
+.public-profile {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.public-profile h1 {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.public-posts {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.public-post-card {
+  display: flex;
+  gap: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fafafa;
+}
+
+.public-post-img {
+  width: 120px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+.profile-loading, .profile-error {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}

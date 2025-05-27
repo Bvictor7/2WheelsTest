@@ -17,19 +17,36 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
+  // Debug logs to inspect incoming data
+  console.log('🔍 [Login] req.headers.Authorization =', req.headers.authorization);
+  console.log('🔍 [Login] req.body =', req.body);
+
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    console.log('🔍 [Login] utilisateur trouvé ?', !!user, user && user.email);
     if (!user) return res.status(401).json({ message: 'Identifiants invalides' });
+
     const valid = await bcrypt.compare(password, user.password);
+    console.log('🔍 [Login] bcrypt.compare =', valid);
     if (!valid) return res.status(401).json({ message: 'Identifiants invalides' });
+
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
-    res.json({ token });
+
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        email: user.email,
+        role: user.role
+      }
+    });
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -63,3 +80,4 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+

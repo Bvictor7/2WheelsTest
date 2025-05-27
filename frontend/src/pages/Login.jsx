@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaGithub, FaFacebook } from 'react-icons/fa';
@@ -11,15 +10,33 @@ export default function Login() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const { data } = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
-      }).then(r => r.json());
-      localStorage.setItem('token', data.token);
-      navigate('/dashboard'); // ou /admin/actualite si admin
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Erreur de connexion');
+      }
+
+      // ✅ Stocker le token et le rôle
+     localStorage.setItem('token', result.token);
+     localStorage.setItem('userRole', result.user.role);
+     localStorage.setItem('userId', result.user.id); 
+
+
+      // ✅ Rediriger selon le rôle
+      if (result.user.role === 'admin') {
+        navigate('/admin/actualite');
+      } else {
+        navigate('/dashboard');
+      }
+
     } catch (err) {
-      alert(err.message || 'Erreur de connexion');
+      alert(err.message || 'Erreur lors de la connexion');
     }
   };
 
@@ -67,6 +84,4 @@ export default function Login() {
     </div>
   );
 }
-
-
 

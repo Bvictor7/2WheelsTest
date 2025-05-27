@@ -4,21 +4,27 @@ import './AdminActualite.css';
 
 export default function AdminActualite() {
   const [posts, setPosts] = useState([]);
+  const [filter, setFilter] = useState('pending');
+
+  const token = localStorage.getItem('token');
 
   const fetchPosts = () => {
-    axios.get('http://localhost:5000/api/posts/admin?status=pending', {
-      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    axios.get('http://localhost:5000/api/posts/admin', {
+      headers: { Authorization: `Bearer ${token}` }
     })
-    .then(res => setPosts(res.data))
+    .then(res => {
+      const filtered = res.data.filter(post => post.status === filter);
+      setPosts(filtered);
+    })
     .catch(console.error);
   };
 
-  useEffect(fetchPosts, []);
+  useEffect(fetchPosts, [filter]);
 
-  const handleStatus = (id, status) => {
+  const updatePostStatus = (id, status) => {
     axios.patch(`http://localhost:5000/api/posts/admin/${id}/status`,
-      { status },
-      { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }}
+      { status }, // ← statut à envoyer : 'approved' ou 'rejected'
+      { headers: { Authorization: `Bearer ${token}` }}
     )
     .then(fetchPosts)
     .catch(console.error);
@@ -27,24 +33,30 @@ export default function AdminActualite() {
   return (
     <div className="admin-page">
       <h1>Modération des Actualités</h1>
-      {posts.length === 0 && <p>Aucun post en attente.</p>}
-      <div className="admin-grid">
-        {posts.map(post => (
-          <div key={post._id} className="admin-card">
-            {post.image && <img src={post.image} alt={post.title} />}
-            <h3>{post.title}</h3>
-            <p>{post.description}</p>
-            <div className="admin-actions">
-              <button onClick={() => handleStatus(post._id, 'approved')}>
-                Approuver
-              </button>
-              <button onClick={() => handleStatus(post._id, 'rejected')}>
-                Rejeter
-              </button>
-            </div>
-          </div>
-        ))}
+
+      <div className="admin-filters">
+        <button onClick={() => setFilter('pending')}>En attente</button>
+        <button onClick={() => setFilter('approved')}>Approuvés</button>
+        <button onClick={() => setFilter('rejected')}>Rejetés</button>
       </div>
+
+      {posts.length === 0 ? (
+        <p>Aucun post trouvé pour ce statut.</p>
+      ) : (
+        <div className="admin-grid">
+          {posts.map(post => (
+            <div key={post._id} className="admin-card">
+              {post.image && <img src={post.image} alt={post.title} />}
+              <h3>{post.title}</h3>
+              <p>{post.description.slice(0, 150)}…</p>
+              <div className="admin-actions">
+                <button onClick={() => updatePostStatus(post._id, 'approved')}>Approuver</button>
+                <button onClick={() => updatePostStatus(post._id, 'rejected')}>Rejeter</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

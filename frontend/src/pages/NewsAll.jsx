@@ -1,10 +1,11 @@
+// src/pages/NewsAll.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { FaHeart } from 'react-icons/fa';
 import './News.css';
 
-export default function News() {
+export default function NewsAll() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const token = localStorage.getItem('token');
@@ -12,7 +13,7 @@ export default function News() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/posts')
+      .get('http://localhost:5000/api/posts/all')
       .then(res => setPosts(res.data))
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -24,19 +25,19 @@ export default function News() {
         headers: { Authorization: `Bearer ${token}` }
       });
 
-      const { data } = await axios.get('http://localhost:5000/api/posts');
+      const { data } = await axios.get('http://localhost:5000/api/posts/all');
       setPosts(data);
     } catch (err) {
       alert("Connexion requise pour liker.");
     }
   };
 
-  if (loading) return <p className="news-loading">Chargement des actualités…</p>;
+  if (loading) return <p className="news-loading">Chargement des nouveautés…</p>;
   if (!posts.length) return <p className="news-empty">Aucune actualité pour le moment.</p>;
 
   return (
     <div className="news-page">
-      <h1>Actualités</h1>
+      <h1>Nouveautés</h1>
       <div className="news-grid">
         {posts.map(post => (
           <div key={post._id} className="news-card">
@@ -47,7 +48,7 @@ export default function News() {
               <h3>{post.title}</h3>
               <p>{post.description.slice(0, 100)}…</p>
               <small className="news-date">
-                Publié le {new Date(post.createdAt).toLocaleDateString('fr-FR')} par {post.author?.name || 'Inconnu'}
+                {new Date(post.createdAt).toLocaleDateString('fr-FR')} • {post.status}
               </small>
               <div className="news-footer">
                 <Link to={`/posts/${post._id}`} className="news-link">

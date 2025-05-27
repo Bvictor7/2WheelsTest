@@ -1,4 +1,3 @@
-// src/components/HeaderMain.jsx
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './HeaderMain.css';
@@ -6,58 +5,56 @@ import './HeaderMain.css';
 export default function HeaderMain() {
   const [open, setOpen] = useState(false);
   const token = localStorage.getItem('token');
+  const role = localStorage.getItem('userRole');
   const navigate = useNavigate();
 
-  const toggleMenu = () => {
-    setOpen(o => !o);
-    document.body.classList.toggle('ovhidden', !open);
-  };
+  const toggleMenu = () => setOpen(!open);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userId');
     navigate('/');
     setOpen(false);
-    document.body.classList.remove('ovhidden');
   };
 
   return (
-    <>
-      <header className="header-main">
-        <Link to="/" className="header-logo-link">
-          <img
-            src="/assets/logo.svg"
-            alt="2Wheels Logo"
-            className="header-logo"
-          />
+    <header className="header-main">
+      <div className="header-content">
+        <Link to="/" className="logo">
+          <img src="/assets/logo.svg" alt="Logo" />
         </Link>
+
         <nav className="nav-desktop">
           <Link to="/">Accueil</Link>
           <Link to="/news">Actualités</Link>
-          <Link to="/dashboard">Dashboard</Link>
-          <Link to="/profile">Profil</Link>
-          <Link to="/admin/actualite">Modération</Link>
+          {token && <Link to="/new">Créer</Link>}
+          {token && <Link to="/dashboard">Dashboard</Link>}
+          {token && <Link to="/profile">Profil</Link>}
+          {role === 'admin' && <Link to="/admin/actualite">Modération</Link>}
           {token
-            ? <button onClick={handleLogout} className="nav-logout">Logout</button>
-            : <Link to="/login">Login</Link>}
+            ? <button onClick={handleLogout} className="logout-btn">Déconnexion</button>
+            : <Link to="/login">Connexion</Link>}
         </nav>
-        <button className="burger-btn" onClick={toggleMenu} aria-label="Menu">
-          <img
-            src="/assets/menu.svg"
-            alt="Menu"
-            className="burger-icon"
-          />
+
+        <button className="burger-btn" onClick={toggleMenu}>
+          <img src="/assets/menu.svg" alt="Menu" />
         </button>
-      </header>
-      <aside className={`nav-mobile ${open ? 'open' : ''}`}>
-        <Link onClick={toggleMenu} to="/">Accueil</Link>
-        <Link onClick={toggleMenu} to="/news">Actualités</Link>
-        <Link onClick={toggleMenu} to="/dashboard">Dashboard</Link>
-        <Link onClick={toggleMenu} to="/profile">Profil</Link>
-        <Link onClick={toggleMenu} to="/admin/actualite">Modération</Link>
-        {token
-          ? <button onClick={handleLogout} className="nav-logout">Logout</button>
-          : <Link onClick={toggleMenu} to="/login">Login</Link>}
-      </aside>
-    </>
+      </div>
+
+      {open && (
+        <div className="nav-mobile open">
+          <Link to="/" onClick={toggleMenu}>Accueil</Link>
+          <Link to="/news" onClick={toggleMenu}>Actualités</Link>
+          {token && <Link to="/new" onClick={toggleMenu}>Créer</Link>}
+          {token && <Link to="/dashboard" onClick={toggleMenu}>Dashboard</Link>}
+          {token && <Link to="/profile" onClick={toggleMenu}>Profil</Link>}
+          {role === 'admin' && <Link to="/admin/actualite" onClick={toggleMenu}>Modération</Link>}
+          {token
+            ? <button onClick={handleLogout}>Déconnexion</button>
+            : <Link to="/login" onClick={toggleMenu}>Connexion</Link>}
+        </div>
+      )}
+    </header>
   );
 }

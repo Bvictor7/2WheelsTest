@@ -6,28 +6,33 @@ import {
   updatePostStatus,
   getUserPosts,
   deletePost,
-  updatePost
+  updatePost,
+  getPostById,
+  toggleLike
 } from '../controllers/postController.js';
+
+
 
 import { parser } from '../config/cloudinary.js';
 import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
-// 1. PUBLIC : récupérer uniquement les posts approuvés
 router.get('/', getApprovedPosts);
 
-// 2. CRÉATION : créer un nouveau post (status = pending)
-router.post('/', parser.single('image'), createPost);
+router.post('/', auth, parser.single('image'), createPost);
 
-// 3. ADMIN – modération des posts
-router.get('/admin', auth, getAllPosts); // voir tous les posts (optionnellement par statut)
-router.patch('/admin/:id/status', auth, updatePostStatus); // changer le statut
+router.get('/admin', auth, getAllPosts); 
+router.patch('/admin/:id/status', auth, updatePostStatus);
 
-// 4. UTILISATEUR – gestion de ses propres posts
-router.get('/user', auth, getUserPosts); // récupérer ses posts
-router.delete('/:id', auth, deletePost); // supprimer un post
-router.put('/:id', auth, parser.single('image'), updatePost); // modifier un post
+router.get('/user', auth, getUserPosts); 
+router.delete('/:id', auth, deletePost); 
+router.put('/:id', auth, parser.single('image'), updatePost);
+router.get('/all', getAllPosts); 
+
+
+router.patch('/:id/like', auth, toggleLike);
+
 
 export default router;
 

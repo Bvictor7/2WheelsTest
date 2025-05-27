@@ -1,21 +1,49 @@
-# EvalFinal
+# EvalFinal  
 # 2Wheels
 
-**Plateforme de création et modération de posts**
+**Plateforme de création et modération de posts pour passionnés de deux-roues**
+
+## 🎥 Aperçu
+
+<img src="screenshot-homepage.png" alt="Aperçu de la page d'accueil" width="700" />
+
+## 🔗 Démo en ligne
+
+➡️ [Lien vers la version déployée](https://2wheels.vercel.app) *(à adapter si dispo)*
+
+---
 
 ## 🛠 Tech Stack
 
-* **Backend** : Node.js, Express, MongoDB Atlas, Mongoose, Cloudinary, JWT (JSON Web Tokens)
+* **Backend** : Node.js, Express, MongoDB Atlas, Mongoose, Cloudinary, JWT (JSON Web Tokens)  
 * **Frontend** : React.js (Vite), React Router, Axios, React Slick (Carousel)
 
 ## 🚀 Fonctionnalités
 
-* **CRUD Posts** : création, lecture publique, mise à jour, suppression de posts
-* **Modération** : interface admin pour valider ou rejeter les posts avant publication
-* **Auth** : inscription, connexion (JWT), pages protégées (dashboard, profil, modération)
-* **Profil** : affichage et mise à jour des informations utilisateur
-* **Dashboard** : gestion des posts utilisateur (édition, suppression)
+* **CRUD Posts** : création, lecture publique, mise à jour, suppression de posts  
+* **Modération** : interface admin pour valider ou rejeter les posts avant publication  
+* **Auth** : inscription, connexion (JWT), pages protégées (dashboard, profil, modération)  
+* **Profil** : affichage et mise à jour des informations utilisateur  
+* **Dashboard** : gestion des posts utilisateur (édition, suppression)  
+* **Likes & Commentaires** : possibilité de liker et commenter un post  
+* **Profil public** : accessible via `/users/:id` avec les articles publiés  
 * **Responsive** : design adaptatif (desktop, tablette, mobile)
+
+## 🗂 Structure du projet
+
+2Wheels/
+├── backend/
+│ ├── controllers/
+│ ├── models/
+│ ├── routes/
+│ ├── config/
+│ └── server.js
+├── frontend/
+│ ├── src/
+│ │ ├── pages/
+│ │ ├── components/
+│ │ └── App.jsx
+└── README.md
 
 ## 📦 Installation locale
 
@@ -24,70 +52,43 @@
    ```bash
    git clone https://github.com/Bvictor7/2Wheels.git
    cd 2Wheels
-   ```
-2. **Backend**
 
-   ```bash
-   cd backend
-   npm install
-   ```
-3. **Frontend**
+2. Backend
+bash
 
-   ```bash
-   cd ../frontend
-   npm install
-   ```
+cd backend
+npm install
 
-## 📝 Variables d’environnement
+3. Frontend
+bash
 
-Crée un fichier `.env` dans **backend/** :
+cd ../frontend
+npm install
 
-```dotenv
+📝 Variables d’environnement
+Crée un fichier .env dans backend/ :
+
+dotenv
+Copier
+Modifier
 MONGO_URI=<your-mongodb-atlas-uri>
 PORT=5000
 JWT_SECRET=<une_chaine_secrete>
 CLOUDINARY_CLOUD_NAME=<cloud_name>
 CLOUDINARY_API_KEY=<api_key>
 CLOUDINARY_API_SECRET=<api_secret>
-```
 
-## ⚙️ Scripts
+⚙️ Scripts
+Backend (backend/)
 
-* **Backend** (à la racine du dossier `backend/`)
+npm run dev : lance le serveur avec nodemon
 
-  * `npm run dev` : lance le serveur avec **nodemon**
-  * `npm start`    : lance le serveur en mode production
+npm start : lance le serveur en mode production
 
-* **Frontend** (à la racine du dossier `frontend/`)
+Frontend (frontend/)
 
-  * `npm run dev`  : démarre le serveur Vite en dev
-  * `npm run build`: génère la version statique dans `dist/`
-  * `npm run preview`: prévisualise la build
+npm run dev : démarre le serveur Vite
 
-## 🚢 Déploiement
+npm run build : build statique
 
-1. **Backend**
-
-   * Plateformes recommandées : Heroku, Railway, Render
-   * Configurer les **Config Vars** (MONGO\_URI, JWT\_SECRET, CLOUDINARY\_\*)
-   * Déployer depuis la branche `main`
-   * Vérifier que l’URL publique de l’API est accessible en HTTPS
-
-2. **Frontend**
-
-   * Plateformes recommandées : Vercel, Netlify
-   * Branch to deploy : `main`
-   * Définir **Build Command** : `npm run build`
-   * Définir **Publish directory** : `dist`
-   * Définir **Environment variables** (pour pointer vers l’API déployée)
-
-## 🔧 Tests finaux
-
-* Créer un compte admin, se connecter, modérer un post
-* Créer un post, modifier, supprimer via Dashboard
-* Vérifier Responsive sur mobile/tablette
-* Vérifier performance (Lighthouse)
-
----
-
-**2Wheels** • Victor | Mai 2025
+npm run preview : prévisualisation de la build

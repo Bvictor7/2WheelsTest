@@ -1,9 +1,7 @@
-// src/pages/Home.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import axios from 'axios';
-import HeaderMain from '../components/HeaderMain';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Home.css';
@@ -32,13 +30,10 @@ export default function Home() {
 
   const featured = posts
     .slice()
-    .sort((a, b) => (b.likes || 0) - (a.likes || 0))[0];
+    .sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))[0];
 
   return (
     <div className="home-container">
-      {/* Header global */}
-      <HeaderMain />
-
       {/* Hero */}
       <section className="hero-section">
         <video className="hero-video" autoPlay loop muted playsInline>
