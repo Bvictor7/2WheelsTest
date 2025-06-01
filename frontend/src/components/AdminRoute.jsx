@@ -11,13 +11,28 @@ export default function AdminRoute({ children }) {
       setAllowed(false);
       return;
     }
+
     axios
-      .get('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
-      .then(res => setAllowed(res.data.role === 'admin'))
+      .get('http://localhost:5000/api/auth/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(res => {
+        setAllowed(res.data.role === 'admin');
+      })
       .catch(() => setAllowed(false));
   }, []);
 
-  if (allowed === null) return <p>Vérification en cours…</p>;
-  if (!allowed) return <Navigate to="/login" replace />;
-  return children;
+  if (allowed === null) {
+    return (
+      <div className="page-container">
+        <p>Vérification en cours…</p>
+      </div>
+    );
+  }
+
+  if (!allowed) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return <>{children}</>;
 }

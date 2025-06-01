@@ -38,42 +38,46 @@ export default function Profile() {
       });
   };
 
-  if (!user) return <p>Chargement…</p>;
+  if (!user) return <div className="page-container"><p>Chargement…</p></div>;
 
   return (
-    <div className="profile-page">
-      <h1>Mon Profil</h1>
-      <form className="profile-form" onSubmit={handleSubmit}>
-        <label>
-          Nom
-          <input
-            type="text"
-            value={form.name}
-            onChange={e => setForm({ ...form, name: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="email"
-            value={form.email}
-            onChange={e => setForm({ ...form, email: e.target.value })}
-            required
-          />
-        </label>
-        <label>
-          Nouveau mot de passe
-          <input
-            type="password"
-            value={form.password}
-            onChange={e => setForm({ ...form, password: e.target.value })}
-            placeholder="Laisser vide pour ne pas changer"
-          />
-        </label>
-        <button type="submit">Mettre à jour</button>
-      </form>
+    <div className="page-container">
+      <div className="profile-page">
+        <h1>Mon Profil</h1>
+        <form className="profile-form" onSubmit={handleSubmit}>
+          <label>
+            Nom
+            <input
+              type="text"
+              value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })}
+              required
+            />
+          </label>
+          <label>
+            Email
+            <input
+              type="email"
+              value={form.email}
+              onChange={e => setForm({ ...form, email: e.target.value })}
+              required
+            />
+          </label>
+          <label>
+            Nouveau mot de passe
+            <input
+              type="password"
+              value={form.password}
+              onChange={e => setForm({ ...form, password: e.target.value })}
+              placeholder="Laisser vide pour ne pas changer"
+            />
+          </label>
+          <button type="submit">Mettre à jour</button>
+        </form>
+      </div>
     </div>
   );
 }
+
+
 

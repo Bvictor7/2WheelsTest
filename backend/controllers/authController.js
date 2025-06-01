@@ -17,13 +17,13 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  // Debug logs to inspect incoming data
   console.log('🔍 [Login] req.headers.Authorization =', req.headers.authorization);
   console.log('🔍 [Login] req.body =', req.body);
 
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email }).select('+role');
+
     console.log('🔍 [Login] utilisateur trouvé ?', !!user, user && user.email);
     if (!user) return res.status(401).json({ message: 'Identifiants invalides' });
 

@@ -18,27 +18,31 @@ export default function PostsList() {
       });
   }, []);
 
-  if (loading) return <p className="loading">Chargement…</p>;
-  if (!posts.length) return <p className="no-posts">Aucun post.</p>;
-
   return (
-    <div className="posts-list">
-      {posts.map(post => (
-        <div key={post._id} className="post-card">
-          <div className="post-img-wrapper">
-            {post.image
-              ? <img src={post.image} alt={post.title} className="post-img" />
-              : <div className="no-image">Pas d’image</div>
-            }
+    <div className="page-container">
+      {loading && <p className="loading">Chargement…</p>}
+      {!loading && !posts.length && <p className="no-posts">Aucun post.</p>}
+
+      <div className="posts-list">
+        {posts.map(post => (
+          <div key={post._id} className="post-card">
+            <div className="post-img-wrapper">
+              {post.image
+                ? <img src={post.image} alt={post.title} className="post-img" />
+                : <div className="no-image">Pas d’image</div>
+              }
+            </div>
+            <h3 className="post-title">{post.title}</h3>
+            <p className="post-desc">{post.description}</p>
+            <small className="post-meta">
+              Catégorie : {post.category} — par {post.author}
+            </small>
           </div>
-          <h3 className="post-title">{post.title}</h3>
-          <p className="post-desc">{post.description}</p>
-          <small className="post-meta">
-            Catégorie : {post.category} — par {post.author}
-          </small>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 }
+
+
 

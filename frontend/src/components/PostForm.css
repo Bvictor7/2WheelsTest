@@ -1,4 +1,14 @@
+:root {
+  --header-height: 64px;
+}
 
+.page-container {
+  padding-top: var(--header-height);
+  max-width: 1200px;
+  margin: auto;
+}
+
+*,
 *::before,
 *::after {
   box-sizing: border-box;
@@ -12,7 +22,7 @@
   padding: 2rem;
   background: #f4f4f4;
   border-radius: 12px;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
   gap: 1rem;
 }
 

@@ -18,3 +18,9 @@ h1, h2 {
   color: #333;
   margin-bottom: 1rem;
 }
+
+.page-container {
+  padding-top: var(--header-height);
+  min-height: 100vh;
+}
+

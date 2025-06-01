@@ -1,3 +1,11 @@
+:root {
+  --header-height: 64px; /* adapte si ton header est plus grand */
+}
+
+.page-container {
+  padding-top: var(--header-height);
+}
+
 .admin-page {
     padding: 2rem;
   }

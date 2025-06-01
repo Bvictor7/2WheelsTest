@@ -39,11 +39,21 @@ export const getPostById = async (req, res) => {
 export const updatePostStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
+
   if (!['pending', 'approved', 'rejected'].includes(status))
     return res.status(400).json({ message: 'Statut invalide' });
-  const post = await Post.findByIdAndUpdate(id, { status }, { new: true });
+
+  const updateFields = { status };
+  if (status === 'approved') {
+    updateFields.approved = true;
+  } else {
+    updateFields.approved = false;
+  }
+
+  const post = await Post.findByIdAndUpdate(id, updateFields, { new: true });
   res.json(post);
 };
+
 
 // 5. Créer un nouveau post
 export const createPost = async (req, res) => {
@@ -55,10 +65,20 @@ export const createPost = async (req, res) => {
       return res.status(401).json({ message: 'Utilisateur non authentifié' });
     }
 
+    // 🔒 Empêche les doublons de titre pour le même auteur
+    const existingPost = await Post.findOne({
+      title: title.trim(),
+      author: req.userId
+    });
+
+    if (existingPost) {
+      return res.status(400).json({ message: 'Un article avec ce titre existe déjà.' });
+    }
+
     const newPost = new Post({
-      title,
-      description,
-      category,
+      title: title.trim(),
+      description: description.trim(),
+      category: category.trim(),
       image,
       author: req.userId,
       approved: req.user.role === 'admin'
@@ -70,6 +90,7 @@ export const createPost = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
 
 // 6. Récupérer les posts de l’utilisateur connecté
 export const getUserPosts = async (req, res) => {

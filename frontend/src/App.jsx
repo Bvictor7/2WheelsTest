@@ -12,34 +12,25 @@ import NewPost from './pages/NewPost';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import UserProfile from './pages/UserProfile';
-import NewsAll from './pages/NewsAll'; // ← ajout
+import NewsAll from './pages/NewsAll';
+import AdminPanel from './pages/AdminPanel';
 import './App.css';
 
 function App() {
   return (
     <BrowserRouter>
       <HeaderMain />
-
       <Routes>
-        {/* Public routes */}
+
+        {/*Routes publiques */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/news" element={<News />} />
-        <Route path="/nouveautes" element={<NewsAll />} /> {/* ← NOUVEAUTÉS */}
+        <Route path="/nouveautes" element={<NewsAll />} />
         <Route path="/posts/:id" element={<ArticleDetail />} />
         <Route path="/users/:id" element={<UserProfile />} />
 
-        {/* Admin-only */}
-        <Route
-          path="/admin/actualite"
-          element={
-            <AdminRoute>
-              <AdminActualite />
-            </AdminRoute>
-          }
-        />
-
-        {/* Authenticated */}
+        {/*Routes protégées (utilisateurs connectés) */}
         <Route
           path="/dashboard"
           element={
@@ -73,7 +64,25 @@ function App() {
           }
         />
 
-        {/* 404 */}
+        {/*Routes réservées à l’admin */}
+        <Route
+          path="/admin/actualite"
+          element={
+            <AdminRoute>
+              <AdminActualite />
+            </AdminRoute>
+          }
+        />
+        <Route
+          path="/admin-panel"
+          element={
+            <AdminRoute>
+              <AdminPanel />
+            </AdminRoute>
+          }
+        />
+
+        {/*404 */}
         <Route path="*" element={<p>Page non trouvée</p>} />
       </Routes>
     </BrowserRouter>
@@ -81,5 +90,3 @@ function App() {
 }
 
 export default App;
-
-

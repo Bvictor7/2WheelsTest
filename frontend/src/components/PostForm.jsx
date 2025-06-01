@@ -42,34 +42,36 @@ export default function PostForm() {
   };
 
   return (
-    <form className="post-form" onSubmit={handleSubmit}>
-      <h2>Nouveau Post</h2>
-      <input
-        name="title"
-        placeholder="Titre"
-        value={formData.title}
-        onChange={handleChange}
-        required
-      />
-      <textarea
-        name="description"
-        placeholder="Description"
-        value={formData.description}
-        onChange={handleChange}
-        required
-      />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleFile}
-      />
-      <input
-        name="category"
-        placeholder="Catégorie"
-        value={formData.category}
-        onChange={handleChange}
-      />
-      <button type="submit">Créer</button>
-    </form>
+    <div className="page-container">
+      <form className="post-form" onSubmit={handleSubmit}>
+        <h2>Nouveau Post</h2>
+        <input
+          name="title"
+          placeholder="Titre"
+          value={formData.title}
+          onChange={handleChange}
+          required
+        />
+        <textarea
+          name="description"
+          placeholder="Description"
+          value={formData.description}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleFile}
+        />
+        <input
+          name="category"
+          placeholder="Catégorie"
+          value={formData.category}
+          onChange={handleChange}
+        />
+        <button type="submit">Créer</button>
+      </form>
+    </div>
   );
 }

@@ -75,10 +75,10 @@ export default function ArticleDetail() {
     }
   };
 
-  if (!post) return <p className="loading">Chargement…</p>;
+  if (!post) return <p className="loading page-container">Chargement…</p>;
 
   return (
-    <div className="detail-page">
+    <div className="detail-page page-container">
       <Link to="/news" className="back-link">← Retour aux actualités</Link>
 
       {post.image && (
@@ -130,4 +130,5 @@ export default function ArticleDetail() {
     </div>
   );
 }
+
 

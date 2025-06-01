@@ -32,6 +32,7 @@ export default function HeaderMain() {
           {token && <Link to="/dashboard">Dashboard</Link>}
           {token && <Link to="/profile">Profil</Link>}
           {role === 'admin' && <Link to="/admin/actualite">Modération</Link>}
+          {role === 'admin' && <Link to="/admin-panel">Panel Admin</Link>}
           {token
             ? <button onClick={handleLogout} className="logout-btn">Déconnexion</button>
             : <Link to="/login">Connexion</Link>}
@@ -50,6 +51,7 @@ export default function HeaderMain() {
           {token && <Link to="/dashboard" onClick={toggleMenu}>Dashboard</Link>}
           {token && <Link to="/profile" onClick={toggleMenu}>Profil</Link>}
           {role === 'admin' && <Link to="/admin/actualite" onClick={toggleMenu}>Modération</Link>}
+          {role === 'admin' && <Link to="/admin-panel" onClick={toggleMenu}>Panel Admin</Link>}
           {token
             ? <button onClick={handleLogout}>Déconnexion</button>
             : <Link to="/login" onClick={toggleMenu}>Connexion</Link>}

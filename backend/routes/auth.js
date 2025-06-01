@@ -7,7 +7,6 @@ const router = express.Router();
 router.post('/register', register);
 router.post('/login', login);
 
-// 👇 routes protégées
 router.get('/me', auth, getProfile);
 router.patch('/me', auth, updateProfile);
 

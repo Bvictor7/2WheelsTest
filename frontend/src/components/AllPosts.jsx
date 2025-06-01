@@ -35,7 +35,7 @@ function AllPosts({ token }) {
   };
 
   return (
-    <div>
+    <div className="page-container">
       <h2>Tous les posts</h2>
       {posts.map(post => (
         <div key={post._id} style={{ border: "1px solid #ccc", padding: "1em", margin: "1em 0" }}>
@@ -54,3 +54,4 @@ function AllPosts({ token }) {
 }
 
 export default AllPosts;
+
