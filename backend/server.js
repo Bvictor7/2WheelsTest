@@ -1,43 +1,30 @@
-// server.js
-
-import express from 'express';
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import cors from 'cors';
-
-import authRouter from './routes/auth.js';
-import userRouter from './routes/user.js';
-import postRouter from './routes/posts.js';
-
 dotenv.config();
+import express from 'express';
+import cors from 'cors';
+import connectDB from './config/db.js';
+import postRoutes from './routes/posts.js';
+import authRoutes from './routes/auth.js';
+import adminRoutes from './routes/admin.js';
+import commentRoutes from './routes/comment.js'; 
+import userRoutes from './routes/user.js';
+
 const app = express();
+connectDB();
 
 app.use(cors());
 app.use(express.json());
 
-// Connexion à MongoDB
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB connecté'))
-  .catch(err => {
-    console.error('❌ Erreur MongoDB :', err);
-    process.exit(1);
-  });
-
-// Montage des routes
-// → Auth et user restent inchangés
-app.use('/api/auth', authRouter);
-app.use('/api/users', userRouter);
-
-// Ici, on monte **intégralement** postRouter sur /api/posts
-// Les deux routes publiques y sont déjà déclarées avant auth()
-app.use('/api/posts', postRouter);
-
-// Gestion 404
-app.use((req, res) => {
-  res.status(404).json({ message: 'Route non trouvée' });
+app.use('/api/auth', authRoutes);
+app.use('/api/posts', postRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/comments', commentRoutes); 
+app.use('/api/users', userRoutes);
+app.get('/', (req, res) => {
+  res.json({ message: 'Le serveur fonctionne.' });
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
-
+app.listen(PORT, () => {
+  console.log(`Serveur démarré sur le port ${PORT}`);
+});
