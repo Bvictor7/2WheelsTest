@@ -1,38 +1,51 @@
+// routes/posts.js
+
 import express from 'express';
 import {
-  createPost,
   getApprovedPosts,
   getAllPosts,
+  getPostById,
   updatePostStatus,
+  createPost,
   getUserPosts,
   deletePost,
   updatePost,
-  getPostById,
   toggleLike
 } from '../controllers/postController.js';
-
-
-
-import { parser } from '../config/cloudinary.js';
 import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
+// ► ROUTES PUBLIQUES (aucun token requis)  
+// Récupérer tous les posts approuvés
 router.get('/', getApprovedPosts);
 
-router.post('/', auth, parser.single('image'), createPost);
+// Récupérer un post par son ID
+router.get('/:id', getPostById);
 
-router.get('/admin', auth, getAllPosts); 
-router.patch('/admin/:id/status', auth, updatePostStatus);
+// ► ROUTES PROTÉGÉES (token JWT requis)  
+router.use(auth);
 
-router.get('/user', auth, getUserPosts); 
-router.delete('/:id', auth, deletePost); 
-router.put('/:id', auth, parser.single('image'), updatePost);
-router.get('/all', getAllPosts); 
+// Récupérer tous les posts (tous statuts)
+router.get('/all', getAllPosts);
 
+// Créer un post
+router.post('/', createPost);
 
-router.patch('/:id/like', auth, toggleLike);
+// Récupérer les posts de l’utilisateur connecté
+router.get('/user', getUserPosts);
 
+// Mettre à jour un post (auteur uniquement)
+router.patch('/:id', updatePost);
+
+// Supprimer un post (auteur uniquement)
+router.delete('/:id', deletePost);
+
+// Mettre à jour le statut d’un post (admin uniquement)
+router.patch('/:id/status', updatePostStatus);
+
+// Gérer les likes (utilisateur connecté)
+router.patch('/:id/like', toggleLike);
 
 export default router;
 

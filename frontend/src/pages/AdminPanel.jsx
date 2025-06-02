@@ -8,37 +8,41 @@ export default function AdminPanel() {
   const [comments, setComments] = useState([]);
   const token = localStorage.getItem('token');
 
+  // 🔄 Récupération des données
   const fetchData = async () => {
     try {
       const [userRes, postRes, commentRes] = await Promise.all([
-        axios.get('http://localhost:5000/api/admin/users', { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get('http://localhost:5000/api/posts/admin', { headers: { Authorization: `Bearer ${token}` } }),
-        axios.get('http://localhost:5000/api/admin/comments', { headers: { Authorization: `Bearer ${token}` } }),
+        axios.get('http://localhost:5000/api/admin/users', {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        axios.get('http://localhost:5000/api/admin/posts', {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        axios.get('http://localhost:5000/api/admin/comments', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
       ]);
       setUsers(userRes.data);
       setPosts(postRes.data);
       setComments(commentRes.data);
     } catch (err) {
-      console.error('Erreur lors de la récupération des données admin:', err);
+      console.error('❌ Erreur lors de la récupération des données admin:', err);
     }
   };
 
   useEffect(() => {
-    fetchData(); // appel initial
-
-    const interval = setInterval(fetchData, 5000); // toutes les 5 secondes
-
-    return () => clearInterval(interval); // nettoyage à la destruction du composant
+    fetchData();
   }, []);
 
+  // 🔘 Suppression
   const handleDelete = async (type, id) => {
     try {
       await axios.delete(`http://localhost:5000/api/admin/${type}/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${token}` }
       });
-      fetchData(); // recharge immédiat après suppression
+      fetchData();
     } catch (err) {
-      console.error(`Erreur lors de la suppression de ${type}:`, err);
+      console.error(`❌ Erreur lors de la suppression de ${type}:`, err);
     }
   };
 
@@ -64,7 +68,7 @@ export default function AdminPanel() {
           <ul>
             {posts.map(post => (
               <li key={post._id}>
-                {post.title}
+                {post.title} - {post.status}
                 <button onClick={() => handleDelete('posts', post._id)}>Supprimer</button>
               </li>
             ))}
@@ -86,4 +90,5 @@ export default function AdminPanel() {
     </div>
   );
 }
+
 
