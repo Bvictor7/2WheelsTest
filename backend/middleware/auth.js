@@ -9,11 +9,9 @@ export default function (req, res, next) {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Injection dans req
-    req.user = decoded;       // contient { id, role }
-    req.userId = decoded.id;  // plus pratique dans les contrôleurs
+    req.user = decoded;       
+    req.userId = decoded.id;  
 
-    // Blocage des routes /admin si rôle ≠ admin
     if (req.originalUrl.includes('/admin') && decoded.role !== 'admin') {
       return res.status(403).json({ message: "Accès interdit (admin requis)" });
     }

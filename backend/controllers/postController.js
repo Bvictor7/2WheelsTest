@@ -1,6 +1,5 @@
 import Post from '../models/Post.js';
 
-// 1. Récupérer tous les posts approuvés
 export const getApprovedPosts = async (req, res) => {
   try {
     const posts = await Post.find({ approved: true })
@@ -12,8 +11,6 @@ export const getApprovedPosts = async (req, res) => {
   }
 };
 
-
-// 2. Récupérer tous les posts 
 export const getAllPosts = async (req, res) => {
   try {
     const posts = await Post.find().sort({ createdAt: -1 });
@@ -23,7 +20,6 @@ export const getAllPosts = async (req, res) => {
   }
 };
 
-// 3. Récupérer un post par ID (ajouté ici pour ArticleDetail)
 export const getPostById = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id)
@@ -35,7 +31,6 @@ export const getPostById = async (req, res) => {
   }
 };
 
-// 4. Mettre à jour le statut d’un post — ADMIN
 export const updatePostStatus = async (req, res) => {
   const { id } = req.params;
   const { status } = req.body;
@@ -54,8 +49,6 @@ export const updatePostStatus = async (req, res) => {
   res.json(post);
 };
 
-
-// 5. Créer un nouveau post
 export const createPost = async (req, res) => {
   try {
     const { title, description, category } = req.body;
@@ -91,8 +84,6 @@ export const createPost = async (req, res) => {
   }
 };
 
-
-// 6. Récupérer les posts de l’utilisateur connecté
 export const getUserPosts = async (req, res) => {
   try {
     const posts = await Post.find({ author: req.userId })
@@ -103,7 +94,6 @@ export const getUserPosts = async (req, res) => {
   }
 };
 
-// 7. Supprimer un post (uniquement si c’est l’auteur)
 export const deletePost = async (req, res) => {
   try {
     const post = await Post.findOneAndDelete({
@@ -117,7 +107,6 @@ export const deletePost = async (req, res) => {
   }
 };
 
-// 8. Mettre à jour un post
 export const updatePost = async (req, res) => {
   try {
     const { title, description, category } = req.body;
@@ -139,7 +128,6 @@ export const updatePost = async (req, res) => {
   }
 };
 
-// 9. Gérer les likes
 export const toggleLike = async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);

@@ -7,7 +7,7 @@ const commentSchema = new mongoose.Schema({
     required: true
   },
   author: {
-    type: String, // ou mongoose.Schema.Types.ObjectId si tu veux lier à User
+    type: String, 
     required: true
   },
   content: {

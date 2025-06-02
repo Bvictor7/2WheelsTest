@@ -2,7 +2,6 @@ import User from '../models/User.js';
 import Post from '../models/Post.js';
 import Comment from '../models/Comment.js';
 
-// 🔍 Tous les posts
 export const listAllPosts = async (req, res) => {
   try {
     const posts = await Post.find().populate('author', 'name email');
@@ -12,7 +11,6 @@ export const listAllPosts = async (req, res) => {
   }
 };
 
-// ✅ Approuver un post
 export const approvePost = async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(
@@ -27,7 +25,6 @@ export const approvePost = async (req, res) => {
   }
 };
 
-// ❌ Rejeter un post
 export const rejectPost = async (req, res) => {
   try {
     const post = await Post.findByIdAndUpdate(
@@ -42,7 +39,6 @@ export const rejectPost = async (req, res) => {
   }
 };
 
-// 🧍 Tous les utilisateurs
 export const listUsers = async (req, res) => {
   try {
     const users = await User.find().select('-password');
@@ -52,7 +48,6 @@ export const listUsers = async (req, res) => {
   }
 };
 
-// 🗑️ Supprimer un utilisateur
 export const deleteUser = async (req, res) => {
   try {
     await User.findByIdAndDelete(req.params.id);
@@ -62,7 +57,6 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// 💬 Tous les commentaires
 export const listComments = async (req, res) => {
   try {
     const comments = await Comment.find().sort({ createdAt: -1 });
@@ -72,7 +66,6 @@ export const listComments = async (req, res) => {
   }
 };
 
-// 🗑️ Supprimer un commentaire
 export const deleteComment = async (req, res) => {
   try {
     await Comment.findByIdAndDelete(req.params.id);

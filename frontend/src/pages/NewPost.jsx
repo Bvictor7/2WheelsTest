@@ -30,7 +30,7 @@ export default function NewPost() {
         },
       });
 
-      alert('✅ Article soumis pour validation !');
+      alert('Article soumis pour validation !');
 
       // Réinitialisation des champs
       setTitle('');
@@ -39,7 +39,7 @@ export default function NewPost() {
       setImage(null);
     } catch (err) {
       console.error(err);
-      alert("❌ Une erreur est survenue lors de la publication.");
+      alert("Une erreur est survenue lors de la publication.");
     } finally {
       setIsSubmitting(false);
     }

@@ -3,7 +3,6 @@
   --spacing: 24px;
 }
 
-/* Global reset */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
@@ -31,7 +30,7 @@
   object-fit: cover;
 }
 
-/* Sections */
+
 section {
   padding: calc(var(--spacing) * 2) var(--spacing);
 }
@@ -74,7 +73,7 @@ section {
   text-align: center;
 }
 
-/* Footer */
+
 .home-footer {
   background: #1D1D1D;
   color: #ccc;
@@ -82,7 +81,7 @@ section {
   padding: var(--spacing);
 }
 
-/* Responsive Breakpoints */
+
 @media (max-width: 1024px) {
   .carousel-item img {
     height: 160px;

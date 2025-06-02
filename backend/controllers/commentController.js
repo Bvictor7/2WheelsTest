@@ -8,7 +8,7 @@ export const addComment = async (req, res) => {
     const comment = await Comment.create({
       postId,
       content,
-      author: req.userId // ou req.user.name si tu veux le nom
+      author: req.userId 
     });
     res.status(201).json(comment);
   } catch (err) {
