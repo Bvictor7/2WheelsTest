@@ -31,7 +31,7 @@ export default function AdminPanel() {
   };
 
   useEffect(() => {
-    fetchData(); // appel initial au montage
+    fetchData(); 
 
     const interval = setInterval(fetchData, 5000); 
     return () => clearInterval(interval);

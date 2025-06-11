@@ -32,7 +32,6 @@ export default function NewPost() {
 
       alert('Article soumis pour validation !');
 
-      // Réinitialisation des champs
       setTitle('');
       setDescription('');
       setCategory('');

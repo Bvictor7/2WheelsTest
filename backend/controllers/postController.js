@@ -58,9 +58,10 @@ export const createPost = async (req, res) => {
       return res.status(401).json({ message: 'Utilisateur non authentifié' });
     }
 
-    // 🔒 Empêche les doublons de titre pour le même auteur
+    const cleanTitle = title.trim().toLowerCase();
+
     const existingPost = await Post.findOne({
-      title: title.trim(),
+      title: { $regex: new RegExp(`^${cleanTitle}$`, 'i') },
       author: req.userId
     });
 

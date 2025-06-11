@@ -13,7 +13,7 @@ const run = async () => {
         { email: 'belahcene2@gmail.com' },
         { $set: { password: newHash } }
       );
-    console.log('🛠️ Password updated:', result.modifiedCount);
+    console.log('Password updated:', result.modifiedCount);
   } catch (err) {
     console.error(err);
   } finally {

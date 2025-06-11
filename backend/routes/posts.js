@@ -12,7 +12,6 @@ import {
 } from '../controllers/postController.js';
 
 
-
 import { parser } from '../config/cloudinary.js';
 import auth from '../middleware/auth.js';
 
