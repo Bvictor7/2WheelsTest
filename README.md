@@ -1,94 +1,162 @@
-# EvalFinal  
-# 2Wheels
+<p align="center">
+  <img src="https://img.shields.io/badge/2Wheels-EvalFinal-blue?style=for-the-badge&amp;logo=appveyor" alt="2Wheels" />
+  <br/>
+  <em>Plateforme de création et modération de posts pour passionnés de deux-roues</em>
+</p>
 
-**Plateforme de création et modération de posts pour passionnés de deux-roues**
+<p align="center">
+  <a href="#-aperçu">🎥 Aperçu</a> •
+  <a href="#-démo-en-ligne">🔗 Démo en ligne</a> •
+  <a href="#-tech-stack">🛠 Tech Stack</a> •
+  <a href="#-fonctionnalités">🚀 Fonctionnalités</a> •
+  <a href="#-structure-du-projet">🗂 Structure du projet</a> •
+  <a href="#-installation-locale">📦 Installation locale</a> •
+  <a href="#-scripts">⚙️ Scripts</a>
+</p>
+
+---
 
 ## 🎥 Aperçu
 
 <img src="screenshot-homepage.png" alt="Aperçu de la page d'accueil" width="700" />
 
+---
+
 ## 🔗 Démo en ligne
 
-➡️ [Lien vers la version déployée](https://2wheels.vercel.app) *(à adapter si dispo)*
+➡️ [Voir la démo déployée](https://2wheels.vercel.app) *(à adapter si nécessaire)*
 
 ---
 
 ## 🛠 Tech Stack
 
-* **Backend** : Node.js, Express, MongoDB Atlas, Mongoose, Cloudinary, JWT (JSON Web Tokens)  
-* **Frontend** : React.js (Vite), React Router, Axios, React Slick (Carousel)
+<table>
+  <tr>
+    <td align="center"><strong>Backend</strong></td>
+    <td align="center"><strong>Frontend</strong></td>
+  </tr>
+  <tr>
+    <td>
+      <ul>
+        <li>Node.js</li>
+        <li>Express</li>
+        <li>MongoDB Atlas &amp; Mongoose</li>
+        <li>Cloudinary</li>
+        <li>JWT (JSON Web Tokens)</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>React.js (Vite)</li>
+        <li>React Router</li>
+        <li>Axios</li>
+        <li>React Slick (Carousel)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+---
 
 ## 🚀 Fonctionnalités
 
-* **CRUD Posts** : création, lecture publique, mise à jour, suppression de posts  
-* **Modération** : interface admin pour valider ou rejeter les posts avant publication  
-* **Auth** : inscription, connexion (JWT), pages protégées (dashboard, profil, modération)  
-* **Profil** : affichage et mise à jour des informations utilisateur  
-* **Dashboard** : gestion des posts utilisateur (édition, suppression)  
-* **Likes & Commentaires** : possibilité de liker et commenter un post  
-* **Profil public** : accessible via `/users/:id` avec les articles publiés  
-* **Responsive** : design adaptatif (desktop, tablette, mobile)
+- **CRUD Posts** : création, lecture publique, mise à jour, suppression  
+- **Modération** : interface admin pour valider ou rejeter les posts avant publication  
+- **Auth & Sécurité** :  
+  - Inscription / connexion (JWT)  
+  - Routes et pages protégées (dashboard, profil, modération)  
+- **Profil Utilisateur** : affichage et mise à jour des informations personnelles  
+- **Dashboard** :  
+  - Gestion des posts de l’utilisateur (édition, suppression)  
+  - Statut de publication  
+- **Likes & Commentaires** : liker et commenter les posts  
+- **Profil Public** : accessible via `/users/:id`, affichant les articles publiés  
+- **Responsive** : design adaptatif (desktop, tablette, mobile)
+
+---
 
 ## 🗂 Structure du projet
 
+\`\`\`text
 2Wheels/
 ├── backend/
-│ ├── controllers/
-│ ├── models/
-│ ├── routes/
-│ ├── config/
-│ └── server.js
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   └── server.js
 ├── frontend/
-│ ├── src/
-│ │ ├── pages/
-│ │ ├── components/
-│ │ └── App.jsx
+│   ├── src/
+│   │   ├── pages/
+│   │   ├── components/
+│   │   └── App.jsx
+│   └── vite.config.js
 └── README.md
+\`\`\`
+
+---
 
 ## 📦 Installation locale
 
 1. **Cloner le dépôt**
 
-   ```bash
+   \`\`\`bash
    git clone https://github.com/Bvictor7/2Wheels.git
    cd 2Wheels
+   \`\`\`
 
-2. Backend
-bash
+2. **Backend**
 
-cd backend
-npm install
+   \`\`\`bash
+   cd backend
+   npm install
+   \`\`\`
 
-3. Frontend
-bash
+3. **Frontend**
 
-cd ../frontend
-npm install
+   \`\`\`bash
+   cd ../frontend
+   npm install
+   \`\`\`
 
-📝 Variables d’environnement
-Crée un fichier .env dans backend/ :
+### 📝 Variables d’environnement
 
-dotenv
-Copier
-Modifier
-MONGO_URI=<your-mongodb-atlas-uri>
+Dans \`backend/\`, créez un fichier \`.env\` :
+
+\`\`\`dotenv
+MONGO_URI=<votre-mongodb-atlas-uri>
 PORT=5000
 JWT_SECRET=<une_chaine_secrete>
 CLOUDINARY_CLOUD_NAME=<cloud_name>
 CLOUDINARY_API_KEY=<api_key>
 CLOUDINARY_API_SECRET=<api_secret>
+\`\`\`
 
-⚙️ Scripts
-Backend (backend/)
+---
 
-npm run dev : lance le serveur avec nodemon
+## ⚙️ Scripts
 
-npm start : lance le serveur en mode production
+### Backend (dossier \`backend/\`)
 
-Frontend (frontend/)
+| Script         | Description                                |
+| -------------- | ------------------------------------------ |
+| \`npm run dev\`  | Démarre le serveur avec **nodemon**        |
+| \`npm start\`    | Démarre le serveur en mode **production**  |
 
-npm run dev : démarre le serveur Vite
+### Frontend (dossier \`frontend/\`)
 
-npm run build : build statique
+| Script             | Description                                |
+| ------------------ | ------------------------------------------ |
+| \`npm run dev\`      | Démarre le serveur de développement (Vite) |
+| \`npm run build\`    | Génère la version statique optimisée       |
+| \`npm run preview\`  | Prévisualise la build                      |
 
-npm run preview : prévisualisation de la build# 2WheelsTest
+---
+
+## 📝 Licence
+
+Ce projet est distribué sous la licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus d’informations.
+
+<p align="center">
+  &copy; 2025 2Wheels • <a href="https://github.com/Bvictor7/2Wheels">GitHub</a>
+</p>
