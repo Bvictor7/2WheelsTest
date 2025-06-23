@@ -1,24 +1,19 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
 export default function (req, res, next) {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) {
-    return res.status(401).json({ message: "Non autorisé (token manquant)" });
-  }
-
+  const token = req.headers.authorization?.split(' ')[1]
+  if (!token) return res.status(401).json({ message: 'Non autorisé (token manquant)' })
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    req.user = decoded;       
-    req.userId = decoded.id;  
-
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+    req.userId = decoded.id
+    req.userRole = decoded.role
     if (req.originalUrl.includes('/admin') && decoded.role !== 'admin') {
-      return res.status(403).json({ message: "Accès interdit (admin requis)" });
+      return res.status(403).json({ message: 'Accès interdit (admin requis)' })
     }
-
-    next();
-  } catch (err) {
-    return res.status(403).json({ message: "Token invalide" });
+    next()
+  } catch {
+    res.status(403).json({ message: 'Token invalide' })
   }
 }
+
 

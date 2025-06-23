@@ -9,7 +9,7 @@ export default function News() {
   useEffect(() => {
   axios.get('http://localhost:5000/api/posts')
     .then(res => {
-      console.log("Articles bruts reçus : ", res.data); 
+      console.log("Articles reçus : ", res.data); 
       const uniqueApprovedPosts = Array.from(
         new Map(res.data
           .filter(p => p.approved === true)

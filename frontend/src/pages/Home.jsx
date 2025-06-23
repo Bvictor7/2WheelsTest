@@ -1,20 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import Slider from 'react-slick';
-import axios from 'axios';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import './Home.css';
+import React, { useEffect, useState } from 'react'
+import Slider from 'react-slick'
+import axios from 'axios'
+import 'slick-carousel/slick/slick.css'
+import 'slick-carousel/slick/slick-theme.css'
+import './Home.css'
+
+const VIDEO_URL = 'https://res.cloudinary.com/di0ui8xfb/video/upload/v1750720702/hero_xrpg0m.mp4'
+const IMAGE_URL = 'https://res.cloudinary.com/di0ui8xfb/image/upload/v1750720890/nouvelle_image_pour_site_ycjh6z.jpg'
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     axios
       .get('http://localhost:5000/api/posts')
       .then(res => setPosts(res.data))
-      .catch(console.error);
-  }, []);
+      .catch(console.error)
+  }, [])
 
   const carouselSettings = {
     dots: true,
@@ -24,24 +26,32 @@ export default function Home() {
     slidesToScroll: 1,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 600, settings: { slidesToShow: 1 } },
-    ],
-  };
+      { breakpoint: 600, settings: { slidesToShow: 1 } }
+    ]
+  }
 
   const featured = posts
     .slice()
-    .sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))[0];
+    .sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))[0]
 
   return (
     <div className="home-container">
-      {/* Hero */}
       <section className="hero-section">
-        <video className="hero-video" autoPlay loop muted playsInline>
-          <source src="/videos/hero.mp4" type="video/mp4" />
-        </video>
+        <video
+          className="hero-video desktop-only"
+          src={VIDEO_URL}
+          autoPlay
+          loop
+          muted
+          playsInline
+        />
+        <img
+          className="hero-image mobile-only"
+          src={IMAGE_URL}
+          alt="Visuel d'accueil"
+        />
       </section>
 
-      {/* Actualité */}
       <section className="actualite-section">
         <h2>Actualité</h2>
         <Slider {...carouselSettings}>
@@ -53,7 +63,6 @@ export default function Home() {
         </Slider>
       </section>
 
-      {/* Nouveauté */}
       {featured && (
         <section className="nouveaute-section">
           <h2>Nouveauté</h2>
@@ -65,10 +74,10 @@ export default function Home() {
         </section>
       )}
 
-      {/* Footer */}
       <footer className="home-footer">
         <p>© 2025 2Wheels. Tous droits réservés.</p>
       </footer>
     </div>
-  );
+)
 }
+

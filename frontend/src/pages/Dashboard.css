@@ -82,3 +82,24 @@
   background-color: #2563eb;
   opacity: 0.95;
 }
+
+@media (max-width: 480px) {
+  .dashboard-page {
+    padding: 1rem;
+  }
+
+  .dashboard-page h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions .edit-btn,
+  .actions button {
+    width: 100%;
+  }
+}
+

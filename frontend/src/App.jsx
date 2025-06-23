@@ -1,36 +1,35 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import HeaderMain from './components/HeaderMain';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import News from './pages/News';
-import AdminActualite from './pages/AdminActualite';
-import Dashboard from './pages/Dashboard';
-import Profile from './pages/Profile';
-import ArticleDetail from './pages/ArticleDetail';
-import EditPost from './pages/EditPost';
-import NewPost from './pages/NewPost';
-import ProtectedRoute from './components/ProtectedRoute';
-import AdminRoute from './components/AdminRoute';
-import UserProfile from './pages/UserProfile';
-import NewsAll from './pages/NewsAll';
-import AdminPanel from './pages/AdminPanel';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import HeaderMain from './components/HeaderMain'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Register from './pages/Register'
+import News from './pages/News'
+import NewsAll from './pages/NewsAll'
+import ArticleDetail from './pages/ArticleDetail'
+import UserProfile from './pages/UserProfile'
+import Dashboard from './pages/Dashboard'
+import NewPost from './pages/NewPost'
+import Profile from './pages/Profile'
+import EditPost from './pages/EditPost'
+import AdminActualite from './pages/AdminActualite'
+import AdminPanel from './pages/AdminPanel'
+import ProtectedRoute from './components/ProtectedRoute'
+import AdminRoute from './components/AdminRoute'
+import './App.css'
 
 function App() {
   return (
     <BrowserRouter>
       <HeaderMain />
       <Routes>
-
-        {/*Routes publiques */}
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/news" element={<News />} />
         <Route path="/nouveautes" element={<NewsAll />} />
         <Route path="/posts/:id" element={<ArticleDetail />} />
         <Route path="/users/:id" element={<UserProfile />} />
 
-        {/*Routes protégées (utilisateurs connectés) */}
         <Route
           path="/dashboard"
           element={
@@ -64,7 +63,6 @@ function App() {
           }
         />
 
-        {/*Routes réservées à l’admin */}
         <Route
           path="/admin/actualite"
           element={
@@ -82,11 +80,11 @@ function App() {
           }
         />
 
-        {/*404 */}
         <Route path="*" element={<p>Page non trouvée</p>} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default App;
+export default App
+

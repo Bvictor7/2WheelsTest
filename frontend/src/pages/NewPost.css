@@ -1,14 +1,15 @@
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-
 .newpost-page {
-  width: 90%;             
-  max-width: 600px;         
-  margin: 120px auto 2rem;  
+  width: 90%;
+  max-width: 600px;
+  margin: 120px auto 2rem;
   font-family: var(--font-body);
 }
 
@@ -42,7 +43,7 @@
 }
 
 .newpost-form button {
-  padding: 0.75rem;
+  padding: 0.75rem 1rem;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
@@ -50,52 +51,52 @@
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, filter 0.2s;
 }
 
 .newpost-form button:hover {
   filter: brightness(0.9);
 }
 
+@media (max-width: 480px) {
+  .newpost-page {
+    margin: 80px auto 1rem;
+    width: 100%;
+    max-width: 100%;
+  }
+  .newpost-form input[type="text"],
+  .newpost-form textarea,
+  .newpost-form input[type="file"],
+  .newpost-form button {
+    font-size: 0.95rem;
+    padding: 0.6rem 0.8rem;
+  }
+}
 
 @media (min-width: 768px) {
   .newpost-page {
-    max-width: 800px;  
-    width: 80%;       
+    width: 80%;
+    max-width: 800px;
   }
-  .newpost-form input,
+  .newpost-form input[type="text"],
   .newpost-form textarea,
+  .newpost-form input[type="file"],
   .newpost-form button {
     font-size: 1rem;
     padding: 0.75rem 1rem;
   }
 }
 
-
 @media (min-width: 1024px) {
   .newpost-page {
-    max-width: 1000px; 
-    width: 70%;        
+    width: 70%;
+    max-width: 1000px;
   }
-  .newpost-form input,
+  .newpost-form input[type="text"],
   .newpost-form textarea,
+  .newpost-form input[type="file"],
   .newpost-form button {
     font-size: 1.05rem;
     padding: 0.8rem 1.2rem;
-  }
-}
-
-
-@media (max-width: 480px) {
-  .newpost-page {
-    margin: 80px auto 1rem;
-    width: 100%;    
-    max-width: 100%;
-  }
-  .newpost-form input,
-  .newpost-form textarea,
-  .newpost-form button {
-    font-size: 0.95rem;
-    padding: 0.6rem 0.8rem;
   }
 }

@@ -1,6 +1,6 @@
-/* src/pages/Profile.css */
 .profile-page {
   max-width: 600px;
+  width: 90%;
   margin: 2rem auto;
   padding: 0 1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -9,6 +9,7 @@
 .profile-page h1 {
   text-align: center;
   margin-bottom: 1.5rem;
+  font-size: clamp(1.5rem, 4vw, 2rem);
   color: #1d1d1d;
 }
 
@@ -21,14 +22,15 @@
 .profile-form label {
   display: flex;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   color: #333;
 }
 
 .profile-form input {
+  width: 100%;
   margin-top: 0.5rem;
   padding: 0.75rem 1rem;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   border: 1px solid #ccc;
   border-radius: 6px;
   transition: border-color 0.2s ease;
@@ -40,20 +42,36 @@
 }
 
 .profile-form button {
+  align-self: flex-end;
   margin-top: 1rem;
-  padding: 0.75rem;
-  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.125rem);
   font-weight: bold;
   color: #fff;
   background-color: #1d4ed8;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .profile-form button:hover {
   background-color: #1e40af;
+}
+
+.profile-form button:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 768px) {
+  .profile-page {
+    margin: 1.5rem auto;
+    width: 95%;
+  }
+  .profile-form button {
+    width: 100%;
+    padding: 0.7rem 1rem;
+  }
 }
 
 @media (max-width: 480px) {

@@ -8,11 +8,15 @@
   box-sizing: border-box;
 }
 
+body {
+  min-width: 320px;
+}
+
 .header-main {
-  width: 100vw;
+  width: 100%;
   background-color: #0e0e0e;
   color: white;
-  position: fixed; 
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1000;
@@ -20,11 +24,11 @@
   height: var(--header-height);
 }
 
-
 .header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   max-width: 1200px;
   margin: auto;
   height: 100%;
@@ -34,6 +38,7 @@
 .logo img {
   height: 40px;
   width: auto;
+  max-width: 100%;
 }
 
 .nav-desktop {
@@ -70,7 +75,6 @@
   height: 28px;
 }
 
-/* Menu mobile */
 .nav-mobile {
   display: none;
 }
@@ -104,7 +108,12 @@
   color: #ff5e00;
 }
 
-/* Responsive */
+@media (max-width: 1024px) {
+  .header-content {
+    padding: 0 0.8rem;
+  }
+}
+
 @media (max-width: 768px) {
   .nav-desktop {
     display: none;

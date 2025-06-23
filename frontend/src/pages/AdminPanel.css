@@ -26,3 +26,22 @@
 .admin-card h2 {
   color: #ff5e00;
 }
+
+@media (max-width: 480px) {
+  .admin-panel {
+    padding: 1rem;
+  }
+
+  .admin-panel h1 {
+    font-size: 1.5rem;
+  }
+
+  .admin-card {
+    padding: 1rem;
+  }
+
+  .admin-card h2 {
+    font-size: 1.25rem;
+  }
+}
+

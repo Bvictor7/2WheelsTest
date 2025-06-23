@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+:root {
+  --header-height: 64px;
+}
+
 .app-container {
   display: flex;
   flex-direction: column;
@@ -14,9 +18,11 @@
   padding: 2rem;
 }
 
-h1, h2 {
+h1,
+h2 {
   color: #333;
   margin-bottom: 1rem;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .page-container {
@@ -24,3 +30,28 @@ h1, h2 {
   min-height: 100vh;
 }
 
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1.5rem;
+  }
+
+  h1,
+  h2 {
+    font-size: clamp(1.25rem, 5vw, 2rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 1rem;
+  }
+
+  h1,
+  h2 {
+    font-size: clamp(1.1rem, 6vw, 1.75rem);
+  }
+
+  .page-container {
+    padding-top: calc(var(--header-height) + 0.5rem);
+  }
+}

@@ -1,6 +1,6 @@
 .edit-page {
   max-width: 600px;
-  margin: 120px auto 2rem; 
+  margin: 120px auto 2rem;
   padding: 0 1rem;
 }
 
@@ -54,6 +54,7 @@
   .edit-page {
     margin: 80px auto 1rem;
   }
+
   .edit-form input[type="text"],
   .edit-form textarea,
   .edit-form input[type="file"],

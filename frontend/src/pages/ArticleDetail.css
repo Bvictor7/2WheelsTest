@@ -105,3 +105,36 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media (max-width: 480px) {
+  .detail-page {
+    padding: 0.75rem;
+  }
+
+  .detail-title {
+    font-size: 1.5rem;
+  }
+
+  .detail-description {
+    font-size: 1rem;
+  }
+
+  .like-button {
+    font-size: 1rem;
+  }
+
+  .comment-form button {
+    width: 100%;
+    align-self: stretch;
+  }
+
+  .comment-list .comment {
+    padding-right: 2.5rem;
+  }
+
+  .comment-list .comment button {
+    right: 0.5rem;
+    top: 0.5rem;
+  }
+}
+
