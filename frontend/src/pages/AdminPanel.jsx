@@ -68,18 +68,6 @@ export default function AdminPanel() {
             ))}
           </ul>
         </section>
-
-        <section>
-          <h2>Commentaires</h2>
-          <ul>
-            {comments.map(c => (
-              <li key={c._id}>
-                <span>{c.content}</span>
-                <button onClick={() => handleDelete('comments', c._id)}>Supprimer</button>
-              </li>
-            ))}
-          </ul>
-        </section>
       </div>
     </div>
   );
