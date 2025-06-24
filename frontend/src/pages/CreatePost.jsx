@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import API from '@services/api';
 import './CreatePost.css';
 
-export default function NewPost() {
+export default function CreatePost() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
@@ -36,37 +36,38 @@ export default function NewPost() {
 
   return (
     <div className="page-container">
-      <div className="newpost-page">
-        <h1>Nouvel article</h1>
-        <form className="newpost-form" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Titre"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Description"
-            value={description}
-            onChange={e => setDescription(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Catégorie"
-            value={category}
-            onChange={e => setCategory(e.target.value)}
-          />
-          <input
-            type="file"
-            onChange={e => setImage(e.target.files[0])}
-            accept="image/*"
-          />
-          <button type="submit">Publier</button>
-        </form>
+      <div className="app-container">
+        <div className="newpost-page">
+          <h1>Nouvel article</h1>
+          <form className="newpost-form" onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Titre"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              required
+            />
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={e => setDescription(e.target.value)}
+              required
+            />
+            <input
+              type="text"
+              placeholder="Catégorie"
+              value={category}
+              onChange={e => setCategory(e.target.value)}
+            />
+            <input
+              type="file"
+              onChange={e => setImage(e.target.files[0])}
+              accept="image/*"
+            />
+            <button type="submit">Publier</button>
+          </form>
+        </div>
       </div>
     </div>
-);
+  );
 }
-

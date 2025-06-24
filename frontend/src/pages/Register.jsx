@@ -1,28 +1,37 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import API from '@services/api';
-import './Register.css';
+import React, { useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import API from '@services/api'
+import './Register.css'
 
 export default function Register() {
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
-  const navigate = useNavigate();
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirm: ''
+  })
+  const navigate = useNavigate()
 
   const handleSubmit = async e => {
-    e.preventDefault();
+    e.preventDefault()
     if (form.password !== form.confirm) {
-      return alert('Les mots de passe ne correspondent pas');
+      return alert('Les mots de passe ne correspondent pas')
     }
     try {
-      const response = await API.post('/auth/register', {
+      const { data } = await API.post('/auth/register', {
         name: form.name,
         email: form.email,
         password: form.password
-      });
-      navigate('/');
+      })
+      // Stocke le token et l'utilisateur en localStorage
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
+      // Redirige vers la page protégée (par ex. dashboard)
+      navigate('/dashboard')
     } catch (err) {
-      alert(err.response?.data?.message || err.message);
+      alert(err.response?.data?.message || err.message)
     }
-  };
+  }
 
   return (
     <div className="page-container">
@@ -73,7 +82,9 @@ export default function Register() {
                 required
               />
             </label>
-            <button type="submit" className="btn-register">S’inscrire</button>
+            <button type="submit" className="btn-register">
+              S’inscrire
+            </button>
           </form>
           <p className="login-link">
             Déjà un compte ? <Link to="/login">Se connecter</Link>
@@ -81,6 +92,6 @@ export default function Register() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 

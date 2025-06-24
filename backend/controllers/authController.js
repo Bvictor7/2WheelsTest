@@ -7,11 +7,31 @@ export const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body
     const existing = await User.findOne({ email })
-    if (existing) return res.status(400).json({ message: 'Email déjà utilisé' })
+    if (existing) {
+      return res.status(400).json({ message: 'Email déjà utilisé' })
+    }
     const hash = await bcrypt.hash(password, 10)
-    const user = new User({ name, email, password: hash, role: role || 'user' })
+    const user = new User({
+      name,
+      email,
+      password: hash,
+      role: role || 'user'
+    })
     await user.save()
-    res.status(201).json({ message: 'Inscription réussie' })
+    const token = jwt.sign(
+      { id: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1d' }
+    )
+    res.status(201).json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    })
   } catch (err) {
     console.error('[Register] erreur =', err)
     res.status(500).json({ message: err.message })
@@ -25,10 +45,14 @@ export const login = async (req, res) => {
     const { email, password } = req.body
     const user = await User.findOne({ email }).select('+role')
     console.log('[Login] utilisateur trouvé ?', !!user, user && user.email)
-    if (!user) return res.status(401).json({ message: 'Identifiants invalides' })
+    if (!user) {
+      return res.status(401).json({ message: 'Identifiants invalides' })
+    }
     const valid = await bcrypt.compare(password, user.password)
     console.log('[Login] bcrypt.compare =', valid)
-    if (!valid) return res.status(401).json({ message: 'Identifiants invalides' })
+    if (!valid) {
+      return res.status(401).json({ message: 'Identifiants invalides' })
+    }
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
@@ -52,7 +76,9 @@ export const getProfile = async (req, res) => {
   console.log('[getProfile] req.userId =', req.userId)
   try {
     const user = await User.findById(req.userId).select('-password')
-    if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé' })
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' })
+    }
     res.json(user)
   } catch (err) {
     console.error('[getProfile] erreur =', err)
@@ -77,9 +103,12 @@ export const updateProfile = async (req, res) => {
     res.json(user)
   } catch (err) {
     console.error('[updateProfile] erreur =', err)
-    if (err.code === 11000) return res.status(400).json({ message: 'Email déjà utilisé' })
+    if (err.code === 11000) {
+      return res.status(400).json({ message: 'Email déjà utilisé' })
+    }
     res.status(500).json({ message: err.message })
   }
 }
+
 
 
