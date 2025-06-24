@@ -1,10 +1,12 @@
 // src/components/AdminRoute.jsx
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import API from '../services/api';  
+import API from '../services/api';
 
 export default function AdminRoute({ children }) {
   const [allowed, setAllowed] = useState(null);
+
+  console.log('AdminRoute mounted, token=', localStorage.getItem('token'));
 
   useEffect(() => {
     const token = localStorage.getItem('token');
