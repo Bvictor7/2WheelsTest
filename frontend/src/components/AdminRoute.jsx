@@ -1,6 +1,7 @@
+// src/components/AdminRoute.jsx
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import axios from 'axios';
+import API from '../services/api';  
 
 export default function AdminRoute({ children }) {
   const [allowed, setAllowed] = useState(null);
@@ -12,14 +13,13 @@ export default function AdminRoute({ children }) {
       return;
     }
 
-    axios
-      .get('http://localhost:5000/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+    API.get('/auth/me')
       .then(res => {
         setAllowed(res.data.role === 'admin');
       })
-      .catch(() => setAllowed(false));
+      .catch(() => {
+        setAllowed(false);
+      });
   }, []);
 
   if (allowed === null) {
