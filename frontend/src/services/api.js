@@ -1,13 +1,14 @@
+import axios from 'axios';
+
 const baseURL = import.meta.env.VITE_API_BASE_URL;
-console.log('🔍 build-time VITE_API_BASE_URL =', baseURL);
+console.log('build-time VITE_API_BASE_URL =', baseURL);
 
 if (!baseURL) {
   throw new Error(
-    `VITE_API_BASE_URL is ${baseURL}. Check your Vercel environment variable configuration.`
+    `VITE_API_BASE_URL is ${baseURL}. Vérifie ta config d'env vars dans Vercel.`
   );
 }
 
-import axios from 'axios';
 const API = axios.create({
   baseURL
 });
