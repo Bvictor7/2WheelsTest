@@ -24,7 +24,7 @@
 
 ## 🔗 Démo en ligne
 
-➡️ [Voir la démo déployée](https://2wheels.vercel.app) *(à adapter si nécessaire)*
+➡️ [Voir la démo déployée](https://2wheels.vercel.app/) *(à adapter si nécessaire)*
 
 ---
 
