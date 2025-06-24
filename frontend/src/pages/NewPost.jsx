@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import API from '@services/api';
 import './CreatePost.css';
 
 export default function NewPost() {
@@ -23,7 +23,7 @@ export default function NewPost() {
     try {
       setIsSubmitting(true);
 
-      await axios.post('http://localhost:5000/api/posts', formData, {
+      await API.post('/posts', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`,
@@ -31,13 +31,11 @@ export default function NewPost() {
       });
 
       alert('Article soumis pour validation !');
-
       setTitle('');
       setDescription('');
       setCategory('');
       setImage(null);
-    } catch (err) {
-      console.error(err);
+    } catch {
       alert("Une erreur est survenue lors de la publication.");
     } finally {
       setIsSubmitting(false);
@@ -81,3 +79,4 @@ export default function NewPost() {
     </div>
   );
 }
+

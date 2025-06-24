@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '@services/api';
 import './UserProfile.css';
 
 export default function UserProfile() {
@@ -10,12 +10,12 @@ export default function UserProfile() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/users/${id}`)
+    API.get(`/users/${id}`)
       .then(res => {
         setUser(res.data.user);
         setPosts(res.data.posts);
       })
-      .catch(console.error)
+      .catch(() => {})
       .finally(() => setLoading(false));
   }, [id]);
 

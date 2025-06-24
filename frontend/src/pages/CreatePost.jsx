@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import './CreatePost.css'; 
+import API from '@services/api';
+import './CreatePost.css';
 
 export default function NewPost() {
   const [title, setTitle] = useState('');
@@ -18,7 +18,7 @@ export default function NewPost() {
     if (image) formData.append('image', image);
 
     try {
-      await axios.post('http://localhost:5000/api/posts', formData, {
+      await API.post('/posts', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${token}`
@@ -30,7 +30,6 @@ export default function NewPost() {
       setImage(null);
       setCategory('');
     } catch (err) {
-      console.error(err);
       alert("Une erreur est survenue lors de la publication.");
     }
   };
@@ -68,6 +67,6 @@ export default function NewPost() {
         </form>
       </div>
     </div>
-  );
+);
 }
 

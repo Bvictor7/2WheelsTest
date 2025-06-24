@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import API from '@services/api';
 import './EditPost.css';
 
 export default function EditPost() {
@@ -16,14 +16,15 @@ export default function EditPost() {
   });
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/api/posts/${id}`)
+    API.get(`/posts/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(res => {
         const { title, description, category, author } = res.data;
         setForm(f => ({ ...f, title, description, category, author }));
       })
-      .catch(console.error);
-  }, [id]);
+      .catch(() => {});
+  }, [id, token]);
 
   const handleChange = e => {
     const { name, value, files } = e.target;
@@ -43,15 +44,14 @@ export default function EditPost() {
     data.append('author', form.author);
     if (form.imageFile) data.append('image', form.imageFile);
 
-    axios
-      .put(`http://localhost:5000/api/posts/${id}`, data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+    API.put(`/posts/${id}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
       .then(() => navigate('/dashboard'))
-      .catch(err => console.error(err));
+      .catch(() => {});
   };
 
   return (

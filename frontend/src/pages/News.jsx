@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '@services/api';
 import './News.css';
 
 export default function News() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-  axios.get('http://localhost:5000/api/posts')
-    .then(res => {
-      console.log("Articles reçus : ", res.data); 
-      const uniqueApprovedPosts = Array.from(
-        new Map(res.data
-          .filter(p => p.approved === true)
-          .map(p => [p._id, p]))
-      ).map(entry => entry[1]);
+    API.get('/posts')
+      .then(res => {
+        const uniqueApprovedPosts = Array.from(
+          new Map(
+            res.data
+              .filter(p => p.approved === true)
+              .map(p => [p._id, p])
+          )
+        ).map(entry => entry[1]);
 
-      setPosts(uniqueApprovedPosts);
-    })
-    .catch(err => console.error(err));
-}, []);
+        setPosts(uniqueApprovedPosts);
+      })
+      .catch(() => {});
+  }, []);
 
   return (
     <div className="page-container">
@@ -35,7 +36,8 @@ export default function News() {
                 <h2>{post.title}</h2>
                 <p>{post.description.slice(0, 100)}...</p>
                 <p className="news-meta">
-                  Par <strong>{post.author?.name || 'Utilisateur supprimé'}</strong> – {new Date(post.createdAt).toLocaleDateString()}
+                  Par <strong>{post.author?.name || 'Utilisateur supprimé'}</strong> –{' '}
+                  {new Date(post.createdAt).toLocaleDateString()}
                 </p>
                 <Link to={`/article/${post._id}`} className="read-more">Lire l'article</Link>
               </div>
@@ -46,3 +48,4 @@ export default function News() {
     </div>
   );
 }
+

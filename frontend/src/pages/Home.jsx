@@ -1,38 +1,31 @@
-import React, { useEffect, useState } from 'react'
-import Slider from 'react-slick'
-import axios from 'axios'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import './Home.css'
+import React from 'react';
+import Slider from 'react-slick';
+import { usePosts } from '@hooks/usePosts';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import './Home.css';
 
-const VIDEO_URL = 'https://res.cloudinary.com/di0ui8xfb/video/upload/v1750720702/hero_xrpg0m.mp4'
-const IMAGE_URL = 'https://res.cloudinary.com/di0ui8xfb/image/upload/v1750720890/nouvelle_image_pour_site_ycjh6z.jpg'
+const VIDEO_URL = 'https://res.cloudinary.com/di0ui8xfb/video/upload/v1750720702/hero_xrpg0m.mp4';
+const IMAGE_URL = 'https://res.cloudinary.com/di0ui8xfb/image/upload/v1750720890/nouvelle_image_pour_site_ycjh6z.jpg';
 
 export default function Home() {
-  const [posts, setPosts] = useState([])
-
-  useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/posts')
-      .then(res => setPosts(res.data))
-      .catch(console.error)
-  }, [])
+  const posts = usePosts();
 
   const carouselSettings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 1,
     slidesToScroll: 1,
     responsive: [
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
       { breakpoint: 600, settings: { slidesToShow: 1 } }
     ]
-  }
+  };
 
   const featured = posts
     .slice()
-    .sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))[0]
+    .sort((a, b) => (b.likes?.length || 0) - (a.likes?.length || 0))[0];
 
   return (
     <div className="home-container">
@@ -78,6 +71,7 @@ export default function Home() {
         <p>© 2025 2Wheels. Tous droits réservés.</p>
       </footer>
     </div>
-)
+  );
 }
+
 

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import API from '@services/api';
 import './Login.css';
 
 export default function Login() {
@@ -8,21 +9,11 @@ export default function Login() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(form),
-      });
+      const { data } = await API.post('/auth/login', form);
 
-      const result = await response.json();
-      console.log('Résultat complet du backend :', result);
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Erreur de connexion');
-      }
-
-      const { token, user } = result;
+      const { token, user } = data;
       if (!token || !user?.role || !user?.id) {
         throw new Error('Réponse du serveur incomplète.');
       }
@@ -36,9 +27,8 @@ export default function Login() {
       } else {
         navigate('/dashboard');
       }
-
     } catch (err) {
-      alert(err.message || 'Erreur lors de la connexion');
+      alert(err.response?.data?.message || err.message);
     }
   };
 
@@ -87,6 +77,7 @@ export default function Login() {
     </div>
   );
 }
+
 
 
 

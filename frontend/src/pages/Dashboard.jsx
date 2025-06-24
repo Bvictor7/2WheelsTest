@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import API from '@services/api';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -8,22 +8,22 @@ export default function Dashboard() {
   const token = localStorage.getItem('token');
 
   const fetchPosts = () => {
-    axios.get('http://localhost:5000/api/posts/user', {
+    API.get('/posts/user', {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then(res => setPosts(res.data))
-    .catch(console.error);
+      .then(res => setPosts(res.data))
+      .catch(console.error);
   };
 
   useEffect(fetchPosts, []);
 
   const handleDelete = id => {
     if (!window.confirm('Supprimer ce post ?')) return;
-    axios.delete(`http://localhost:5000/api/posts/${id}`, {
+    API.delete(`/posts/${id}`, {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then(() => fetchPosts())
-    .catch(console.error);
+      .then(() => fetchPosts())
+      .catch(console.error);
   };
 
   return (
@@ -53,4 +53,5 @@ export default function Dashboard() {
     </div>
   );
 }
+
 

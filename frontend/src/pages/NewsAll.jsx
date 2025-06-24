@@ -1,8 +1,7 @@
-// src/pages/NewsAll.jsx
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { FaHeart } from 'react-icons/fa';
+import API from '@services/api';
 import './News.css';
 
 export default function NewsAll() {
@@ -11,23 +10,22 @@ export default function NewsAll() {
   const token = localStorage.getItem('token');
   const userId = localStorage.getItem('userId');
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/posts/all')
+  const fetchPosts = () => {
+    API.get('/posts/all')
       .then(res => setPosts(res.data))
-      .catch(console.error)
+      .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  };
 
-  const handleLike = async (postId) => {
+  useEffect(fetchPosts, []);
+
+  const handleLike = async postId => {
     try {
-      await axios.patch(`http://localhost:5000/api/posts/${postId}/like`, {}, {
+      await API.patch(`/posts/${postId}/like`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
-
-      const { data } = await axios.get('http://localhost:5000/api/posts/all');
-      setPosts(data);
-    } catch (err) {
+      fetchPosts();
+    } catch {
       alert("Connexion requise pour liker.");
     }
   };

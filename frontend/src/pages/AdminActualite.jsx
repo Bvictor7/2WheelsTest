@@ -1,33 +1,32 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import API from '@services/api';
 import './AdminActualite.css';
 
 export default function AdminActualite() {
   const [posts, setPosts] = useState([]);
   const [filter, setFilter] = useState('pending');
-
   const token = localStorage.getItem('token');
 
   const fetchPosts = () => {
-    axios.get('http://localhost:5000/api/posts/admin', {
+    API.get('/posts/admin', {
       headers: { Authorization: `Bearer ${token}` }
     })
-    .then(res => {
-      const filtered = res.data.filter(post => post.status === filter);
-      setPosts(filtered);
-    })
-    .catch(console.error);
+      .then(res => {
+        const filtered = res.data.filter(post => post.status === filter);
+        setPosts(filtered);
+      })
+      .catch(() => {});
   };
 
-  useEffect(fetchPosts, [filter]);
+  useEffect(fetchPosts, [filter, token]);
 
   const updatePostStatus = (id, status) => {
-    axios.patch(`http://localhost:5000/api/posts/admin/${id}/status`,
+    API.patch(`/posts/admin/${id}/status`,
       { status, approved: status === 'approved' },
       { headers: { Authorization: `Bearer ${token}` }}
     )
-    .then(fetchPosts)
-    .catch(console.error);
+      .then(fetchPosts)
+      .catch(() => {});
   };
 
   return (
@@ -62,4 +61,3 @@ export default function AdminActualite() {
     </div>
   );
 }
-

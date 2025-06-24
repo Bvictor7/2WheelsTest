@@ -1,31 +1,28 @@
-import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import './Register.css'
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import API from '@services/api';
+import './Register.css';
 
 export default function Register() {
-  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' })
-  const navigate = useNavigate()
+  const [form, setForm] = useState({ name: '', email: '', password: '', confirm: '' });
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
-    e.preventDefault()
+    e.preventDefault();
     if (form.password !== form.confirm) {
-      return alert('Les mots de passe ne correspondent pas')
+      return alert('Les mots de passe ne correspondent pas');
     }
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: form.name, email: form.email, password: form.password })
-      })
-      const result = await response.json()
-      if (!response.ok) {
-        throw new Error(result.message)
-      }
-      navigate('/')
+      const response = await API.post('/auth/register', {
+        name: form.name,
+        email: form.email,
+        password: form.password
+      });
+      navigate('/');
     } catch (err) {
-      alert(err.message)
+      alert(err.response?.data?.message || err.message);
     }
-  }
+  };
 
   return (
     <div className="page-container">
@@ -84,5 +81,6 @@ export default function Register() {
         </div>
       </div>
     </div>
-  )
+  );
 }
+

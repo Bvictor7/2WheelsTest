@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import API from '@services/api';
 import './Profile.css';
 
 export default function Profile() {
@@ -8,10 +8,9 @@ export default function Profile() {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    axios
-      .get('http://localhost:5000/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+    API.get('/auth/me', {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then(res => {
         setUser(res.data);
         setForm({ name: res.data.name, email: res.data.email, password: '' });
@@ -21,19 +20,17 @@ export default function Profile() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios
-      .patch(
-        'http://localhost:5000/api/auth/me',
-        { name: form.name, email: form.email, ...(form.password && { password: form.password }) },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
+    API.patch(
+      '/auth/me',
+      { name: form.name, email: form.email, ...(form.password && { password: form.password }) },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
       .then(res => {
         setUser(res.data);
         alert('Profil mis à jour !');
         setForm(f => ({ ...f, password: '' }));
       })
       .catch(err => {
-        console.error(err);
         alert(err.response?.data?.message || 'Erreur !');
       });
   };
@@ -78,6 +75,7 @@ export default function Profile() {
     </div>
   );
 }
+
 
 
 
