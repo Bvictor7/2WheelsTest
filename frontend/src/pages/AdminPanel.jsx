@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import API from '@services/api';
+import API from '../services/api';
 import './AdminPanel.css';
 
 export default function AdminPanel() {

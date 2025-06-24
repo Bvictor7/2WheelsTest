@@ -5,13 +5,11 @@ console.log('build-time VITE_API_BASE_URL =', baseURL);
 
 if (!baseURL) {
   throw new Error(
-    `VITE_API_BASE_URL is ${baseURL}. Vérifie Settings → Environment Variables dans Vercel.`
+    `VITE_API_BASE_URL is ${baseURL}. Vérifie ta config Env Vars sur Vercel.`
   );
 }
 
-const API = axios.create({
-  baseURL
-});
+const API = axios.create({ baseURL });
 
 API.interceptors.request.use(
   config => {

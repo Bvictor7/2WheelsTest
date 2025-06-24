@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { FaHeart } from 'react-icons/fa';
-import API from '@services/api';
+import API from '../services/api';
 import './ArticleDetail.css';
 
 export default function ArticleDetail() {

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaHeart } from 'react-icons/fa';
-import API from '@services/api';
+import API from '../services/api';
 import './News.css';
 
 export default function NewsAll() {
