@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@services': path.resolve(__dirname, 'src/services')
+      '@services': path.resolve(__dirname, 'src/services'),
+      '@hooks':    path.resolve(__dirname, 'src/hooks')      // <-- nouvel alias
     }
   }
 });
