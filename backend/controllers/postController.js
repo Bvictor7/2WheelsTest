@@ -1,4 +1,3 @@
-// controllers/postController.js
 import Post from '../models/Post.js'
 
 export const getApprovedPosts = async (req, res) => {
@@ -44,29 +43,37 @@ export const updatePostStatus = async (req, res) => {
 
 export const createPost = async (req, res) => {
   try {
-    const { title, description, category } = req.body
-    const image = req.file ? req.file.path : null
-    const cleanTitle = title.trim().toLowerCase()
+    const { title, description, category } = req.body;
+    const image = req.file ? req.file.path : null;
+    const cleanTitle = title.trim().toLowerCase();
     const existingPost = await Post.findOne({
       title: { $regex: new RegExp(`^${cleanTitle}$`, 'i') },
       author: req.userId
-    })
-    if (existingPost)
-      return res.status(400).json({ message: 'Un article avec ce titre existe déjà.' })
+    });
+    if (existingPost) {
+      return res.status(400).json({ message: 'Un article avec ce titre existe déjà.' });
+    }
+
+    const approved = req.userRole === 'admin';
+
     const newPost = new Post({
       title: title.trim(),
       description: description.trim(),
       category: category.trim(),
       image,
       author: req.userId,
-      approved: req.user.role === 'admin'
-    })
-    const saved = await newPost.save()
-    res.status(201).json(saved)
+      approved
+    });
+
+    const saved = await newPost.save();
+    res
+      .status(201)
+      .json({ message: 'Post créé, en attente de validation', post: saved });
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    console.error('[createPost] erreur =', err);
+    res.status(500).json({ message: err.message });
   }
-}
+};
 
 export const getUserPosts = async (req, res) => {
   try {
