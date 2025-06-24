@@ -15,6 +15,7 @@ import AdminActualite from './pages/AdminActualite'
 import AdminPanel from './pages/AdminPanel'
 import ProtectedRoute from './components/ProtectedRoute'
 import AdminRoute from './components/AdminRoute'
+import API from './services/api';
 import './App.css'
 
 function App() {
