@@ -4,10 +4,9 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-   resolve: {
+  resolve: {
     alias: {
-      '@services': path.resolve(__dirname, 'src/services'),
-      '@hooks':    path.resolve(__dirname, 'src/hooks'),
-          }
+      '@services': path.resolve(__dirname, 'src/services')
+    }
   }
 });

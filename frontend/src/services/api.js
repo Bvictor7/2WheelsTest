@@ -5,7 +5,7 @@ console.log('build-time VITE_API_BASE_URL =', baseURL);
 
 if (!baseURL) {
   throw new Error(
-    `VITE_API_BASE_URL is ${baseURL}. Vérifie ta config d'env vars dans Vercel.`
+    `VITE_API_BASE_URL is ${baseURL}. Vérifie Settings → Environment Variables dans Vercel.`
   );
 }
 
@@ -14,14 +14,12 @@ const API = axios.create({
 });
 
 API.interceptors.request.use(
-  (config) => {
+  config => {
     const token = localStorage.getItem('token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    if (token) config.headers.Authorization = `Bearer ${token}`;
     return config;
   },
-  (error) => Promise.reject(error)
+  error => Promise.reject(error)
 );
 
 export default API;
