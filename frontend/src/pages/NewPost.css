@@ -8,8 +8,9 @@
 
 .newpost-page {
   width: 90%;
-  max-width: 600px;
-  margin: 120px auto 2rem;
+  max-width: 800px;
+  margin: calc(var(--header-height) + 2rem) auto 2rem;
+  padding: 0 1rem;
   font-family: var(--font-body);
 }
 
@@ -17,6 +18,7 @@
   text-align: center;
   margin-bottom: 1.5rem;
   color: var(--clr-text);
+  font-size: 1.8rem;
 }
 
 .newpost-form {
@@ -29,7 +31,7 @@
 .newpost-form textarea,
 .newpost-form input[type="file"] {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1rem;
   font-size: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -43,7 +45,7 @@
 }
 
 .newpost-form button {
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1rem;
   font-size: 1rem;
   font-weight: 600;
   color: #fff;
@@ -58,12 +60,13 @@
   filter: brightness(0.9);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .newpost-page {
-    margin: 80px auto 1rem;
-    width: 100%;
-    max-width: 100%;
+    width: 95%;
+    padding: 0 0.8rem;
+    margin: calc(var(--header-height) + 1.5rem) auto 1.5rem;
   }
+
   .newpost-form input[type="text"],
   .newpost-form textarea,
   .newpost-form input[type="file"],
@@ -71,32 +74,28 @@
     font-size: 0.95rem;
     padding: 0.6rem 0.8rem;
   }
+
+  .newpost-page h1 {
+    font-size: 1.5rem;
+  }
 }
 
-@media (min-width: 768px) {
+@media (max-width: 480px) {
   .newpost-page {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    padding: 0 0.6rem;
+    margin: calc(var(--header-height) + 1rem) auto 1rem;
   }
+
   .newpost-form input[type="text"],
   .newpost-form textarea,
   .newpost-form input[type="file"],
   .newpost-form button {
-    font-size: 1rem;
-    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 0.6rem;
   }
-}
 
-@media (min-width: 1024px) {
-  .newpost-page {
-    width: 70%;
-    max-width: 1000px;
-  }
-  .newpost-form input[type="text"],
-  .newpost-form textarea,
-  .newpost-form input[type="file"],
-  .newpost-form button {
-    font-size: 1.05rem;
-    padding: 0.8rem 1.2rem;
+  .newpost-page h1 {
+    font-size: 1.3rem;
   }
 }
