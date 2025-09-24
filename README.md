@@ -22,12 +22,6 @@
 
 ---
 
-## 🔗 Démo en ligne
-
-➡️ [Voir la démo déployée](https://2wheels.vercel.app)
-
----
-
 ## 🛠 Tech Stack
 
 <table>
