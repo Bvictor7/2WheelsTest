@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { usePosts } from '@hooks/usePosts';
 import 'slick-carousel/slick/slick.css';
@@ -14,12 +15,19 @@ export default function Home() {
   const carouselSettings = {
     dots: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    centerMode: true,
+    centerPadding: '120px',
+    slidesToShow: 3,
+    speed: 600,
+    arrows: true,
     responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2 } },
-      { breakpoint: 600, settings: { slidesToShow: 1 } }
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 1,
+          centerPadding: '0px'
+        }
+      }
     ]
   };
 
@@ -47,23 +55,34 @@ export default function Home() {
 
       <section className="actualite-section">
         <h2>Actualité</h2>
-        <Slider {...carouselSettings}>
-          {posts.map(post => (
-            <div key={post._id} className="carousel-item">
-              {post.image && <img src={post.image} alt={post.title} />}
-            </div>
-          ))}
-        </Slider>
+        {posts.length > 0 && (
+          <Slider {...carouselSettings} className="actualite-carousel">
+            {posts.map(post => (
+              <div key={post._id} className="carousel-item">
+                <Link to={`/posts/${post._id}`}>
+                  <img src={post.image} alt={post.title} />
+                  <div className="carousel-caption">
+                    <h3>{post.title.toUpperCase()}</h3>
+                    <p>{post.description?.slice(0, 80)}...</p>
+                    <span className="carousel-source">Concept Kawasaki</span>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </Slider>
+        )}
       </section>
 
       {featured && (
         <section className="nouveaute-section">
           <h2>Nouveauté</h2>
-          <div className="featured-card">
-            {featured.image && <img src={featured.image} alt={featured.title} />}
-            <h3>{featured.title}</h3>
-            <p>{featured.description}</p>
-          </div>
+          <Link to="/news" className="featured-link">
+            <div className="featured-card">
+              {featured.image && <img src={featured.image} alt={featured.title} />}
+              <h3>{featured.title}</h3>
+              <p>{featured.description}</p>
+            </div>
+          </Link>
         </section>
       )}
 
@@ -73,5 +92,3 @@ export default function Home() {
     </div>
   );
 }
-
-

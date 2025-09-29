@@ -1,6 +1,8 @@
 import User from '../models/User.js'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
+import crypto from 'crypto'
+import nodemailer from 'nodemailer'
 
 export const register = async (req, res) => {
   console.log('[Register] req.body =', req.body)
@@ -109,6 +111,63 @@ export const updateProfile = async (req, res) => {
     res.status(500).json({ message: err.message })
   }
 }
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: 'Utilisateur non trouvé.' });
+
+    const token = crypto.randomBytes(32).toString('hex');
+    user.resetToken = token;
+    user.resetTokenExpiry = Date.now() + 3600000; // 1h
+    await user.save();
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'tonemail@gmail.com',
+        pass: 'tonmotdepasse'
+      }
+    });
+
+    const resetLink = `http://localhost:5173/reset-password/${token}`;
+    await transporter.sendMail({
+      to: user.email,
+      subject: 'Réinitialisation du mot de passe',
+      html: `<p>Cliquez ici pour réinitialiser votre mot de passe :</p><a href="${resetLink}">${resetLink}</a>`
+    });
+
+    res.json({ message: 'Email de réinitialisation envoyé.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur.' });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { token } = req.params;
+  const { password } = req.body;
+
+  try {
+    const user = await User.findOne({
+      resetToken: token,
+      resetTokenExpiry: { $gt: Date.now() }
+    });
+
+    if (!user) return res.status(400).json({ message: 'Lien invalide ou expiré.' });
+
+    user.password = password;
+    user.resetToken = undefined;
+    user.resetTokenExpiry = undefined;
+    await user.save();
+
+    res.json({ message: 'Mot de passe réinitialisé avec succès.' });
+  } catch (err) {
+    res.status(500).json({ message: 'Erreur serveur.' });
+  }
+};
+
+
 
 
 

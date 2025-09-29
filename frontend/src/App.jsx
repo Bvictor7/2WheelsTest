@@ -1,22 +1,23 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import HeaderMain from './components/HeaderMain'
-import Home from './pages/Home'
-import Login from './pages/Login'
-import Register from './pages/Register'
-import News from './pages/News'
-import NewsAll from './pages/NewsAll'
-import ArticleDetail from './pages/ArticleDetail'
-import UserProfile from './pages/UserProfile'
-import Dashboard from './pages/Dashboard'
-import NewPost from './pages/NewPost'
-import Profile from './pages/Profile'
-import EditPost from './pages/EditPost'
-import AdminActualite from './pages/AdminActualite'
-import AdminPanel from './pages/AdminPanel'
-import ProtectedRoute from './components/ProtectedRoute'
-import AdminRoute from './components/AdminRoute'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HeaderMain from './components/HeaderMain';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import News from './pages/News';
+import NewsAll from './pages/NewsAll';
+import ArticleDetail from './pages/ArticleDetail';
+import UserProfile from './pages/UserProfile';
+import Dashboard from './pages/Dashboard';
+import NewPost from './pages/NewPost';
+import Profile from './pages/Profile';
+import EditPost from './pages/EditPost';
+import AdminActualite from './pages/AdminActualite';
+import AdminPanel from './pages/AdminPanel';
+import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
+import ForgotPassword from './pages/ForgotPassword';
 import API from './services/api';
-import './App.css'
+import './App.css';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/nouveautes" element={<NewsAll />} />
         <Route path="/posts/:id" element={<ArticleDetail />} />
         <Route path="/users/:id" element={<UserProfile />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
 
         <Route
           path="/dashboard"
@@ -84,8 +86,7 @@ function App() {
         <Route path="*" element={<p>Page non trouvée</p>} />
       </Routes>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
-
+export default App;
