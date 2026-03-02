@@ -43,7 +43,7 @@ export default function Register() {
           </div>
           <form className="register-form" onSubmit={handleSubmit}>
             <label>
-              Nom
+              Nom complet
               <input
                 type="text"
                 placeholder="Votre nom"
