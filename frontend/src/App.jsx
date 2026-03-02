@@ -16,6 +16,7 @@ import AdminPanel from './pages/AdminPanel';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminRoute from './components/AdminRoute';
 import ForgotPassword from './pages/ForgotPassword';
+import CV from './pages/CV';
 import API from './services/api';
 import './App.css';
 
@@ -32,6 +33,7 @@ function App() {
         <Route path="/posts/:id" element={<ArticleDetail />} />
         <Route path="/users/:id" element={<UserProfile />} />
         <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/cv" element={<CV />} />
 
         <Route
           path="/dashboard"
